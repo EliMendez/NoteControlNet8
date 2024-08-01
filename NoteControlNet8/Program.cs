@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using NoteControlNet8.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Add SqlServer connection
+var connectionStrig = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionStrig));
 
 var app = builder.Build();
 
